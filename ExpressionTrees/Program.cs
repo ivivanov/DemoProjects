@@ -13,8 +13,9 @@ namespace ExpressionTrees
         {
             PersonCollection people = new PersonCollection();
             // read prop name to sort by
-            string propName = Console.ReadLine();
-            people.SortByPropName(propName);
+            //string propName = Console.ReadLine();
+            //people.SortByPropName(propName);
+            people.SortByPropAge("Age", 28);
             foreach (var item in people.People)
             {
                 Console.WriteLine(item.ToString());
@@ -52,6 +53,8 @@ namespace ExpressionTrees
 
     public static class ExpressionsUtil
     {
+        public static Func<Person, int, bool> AgeGT = (a, b) => a.Age > 30;
+
         public static Func<string, string, string> ConcatWithSpace = (a, b) => a + ' ' + b;
 
         public static Func<int, int, double> SumIntInDouble = (a, b) => a + b;
@@ -71,6 +74,18 @@ namespace ExpressionTrees
                 // Compile the expression tree into executable code.
                 return lessThan.Compile();
             }
+        }
+        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByProperty, bool desc)
+        {
+            string command = desc ? "OrderByDescending" : "OrderBy";
+            var type = typeof(TEntity);
+            var property = type.GetProperty(orderByProperty);
+            var parameter = Expression.Parameter(type, "p");
+            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
+            var resultExpression = Expression.Call(typeof(Queryable), command, new Type[] { type, property.PropertyType },
+                                          source.Expression, Expression.Quote(orderByExpression));
+            return source.Provider.CreateQuery<TEntity>(resultExpression);
         }
     }
 }
