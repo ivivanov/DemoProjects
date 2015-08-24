@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionTrees", "ExpressionTrees\ExpressionTrees.csproj", "{903B2EEA-4A5E-45B7-9B3C-BBFCCE1B248D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembusWithRX", "MembusWithRX\MembusWithRX.csproj", "{412EB2B3-1E88-4ACB-B63C-7442DACCBBD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IObservableNS", "IObservable\IObservableNS.csproj", "{F57A64D7-1788-4F08-B2A1-1EC526E04A97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{903B2EEA-4A5E-45B7-9B3C-BBFCCE1B248D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903B2EEA-4A5E-45B7-9B3C-BBFCCE1B248D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903B2EEA-4A5E-45B7-9B3C-BBFCCE1B248D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{412EB2B3-1E88-4ACB-B63C-7442DACCBBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{412EB2B3-1E88-4ACB-B63C-7442DACCBBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{412EB2B3-1E88-4ACB-B63C-7442DACCBBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{412EB2B3-1E88-4ACB-B63C-7442DACCBBD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57A64D7-1788-4F08-B2A1-1EC526E04A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57A64D7-1788-4F08-B2A1-1EC526E04A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57A64D7-1788-4F08-B2A1-1EC526E04A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57A64D7-1788-4F08-B2A1-1EC526E04A97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

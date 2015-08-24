@@ -8,25 +8,66 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace MembusWithRX
 {
     class Program
     {
+        public class IvanSubject : ISubject<int, int>
+        {
 
+            public void OnCompleted()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnError(Exception error)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnNext(int value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IDisposable Subscribe(IObserver<int> observer)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        //Takes an IObservable<string> as its parameter. 
+        //Subject<string> implements this interface.
+        public static void WriteSequenceToConsole(IObservable<int> sequence)
+        {
+            //The next two lines are equivalent.
+            //sequence.Subscribe(value=>Console.WriteLine(value));
+            sequence.Subscribe(Console.WriteLine);
+        }
+         
         static void Main(string[] args)
         {
+            var subject = new IvanSubject();
+            //WriteSequenceToConsole(subject);
+            subject.OnNext(1);
+            subject.OnNext(2);
+            subject.OnNext(3);
+            Console.ReadKey();
+
             //InitRunClock();
-            IBus bus = 
-                BusSetup.StartWith<Fast>()
-                .Apply<FlexibleSubscribeAdapter>(cfg => cfg.ByInterface(typeof(IObservable<>))) 
-                .Construct();
-            Clock clock = new Clock(bus);
-            bus.Subscribe<DateTime>(SomeFunction);
-            //bus.Observe<Clock>();
-            clock.Start();
-            bus.Dispose();
+            //IBus bus = 
+            //    BusSetup.StartWith<Fast>()
+            //    .Apply<FlexibleSubscribeAdapter>(cfg => cfg.ByInterface(typeof(IObservable<>))) 
+            //    .Construct();
+            //Clock clock = new Clock(bus);
+            //bus.Subscribe<DateTime>(SomeFunction);
+            ////bus.Observe<Clock>();
+            //clock.Start();
+            //bus.Dispose();
         }
+
 
         public static void SomeFunction(DateTime value)
         {
