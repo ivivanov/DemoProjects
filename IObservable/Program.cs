@@ -10,7 +10,7 @@ namespace IObservableNS
     {
         static void Main(string[] args)
         {
-            IObservable<Car> Cars = new IObservable<Car>();
+            //IObservable<Car> Cars = new IObservable<Car>();
         }
     }
 }

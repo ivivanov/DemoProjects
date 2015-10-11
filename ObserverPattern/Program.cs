@@ -50,7 +50,7 @@ namespace ObserverPattern
 
         public void Detach(Observer obs)
         {
-            this.observers.Remove(obs);
+            observers.Remove(obs);
         }
 
         public void Notify()
