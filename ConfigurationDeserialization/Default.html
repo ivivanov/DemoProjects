@@ -1,0 +1,697 @@
+<!--------------------------------------------------------------------------->
+<!--                           INTRODUCTION                                
+
+ The Code Project article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->
+<!--------------------------------------------------------------------------->
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+   <title>The Code Project</title>
+   <style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+   <link rel="stylesheet" type="text/css" href="http://www.codeproject.com/styles/global.css">
+</head>
+<body bgcolor="#FFFFFF" color="#000000">
+   <!--------------------------------------------------------------------------->
+   <!-------------------------------     STEP 1      --------------------------->
+   <!--  Fill in the details (CodeProject will reformat this section for you) -->
+   <pre>Title:       Creating Custom Configuration Section C#
+Author:      Dennis Fazekas
+Email:       myprojects@dennisfazekas.com
+Member ID:   2259174
+Language:    C# 2.0
+Platform:    .NET 2.0
+Technology:  Visual Studio .Net 2005
+Level:       Advanced
+Description: An article on creating Custom Configuration Sections.
+Section      Suggest a section...
+SubSection   Suggest a subsection...
+</pre>
+   <!-------------------------------     STEP 2      --------------------------->
+   <!--  Include download and sample image information.                       -->
+   <ul class="download">
+      <li><a href="ShiConfigurationSectionHandler_src.zip">Download source - XXX Kb</a></li>
+   </ul>
+   <!-------------------------------     STEP 3      --------------------------->
+   <!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   -->
+   <h2>
+      Introduction</h2>
+   <p>
+      The purpose of this project is to demonstrate the creation of a custom configuration
+      section using the Configuration Manager API. My sample is based on a common issue
+      that many companies experience when deploying applications from a development environment
+      to a production environment. Many times the configuration settings between environments
+      are different. The custom configuration section implemented by this project will
+      store both the development and production configuration settings and return the
+      setting based on a codebase setting.
+   </p>
+   <p>
+      This demonstration will walk you through the creation of an assembly (DLL) to implement
+      the Configuration Manager API classes that are required to read the custom configuration
+      section.
+   </p>
+   <p>
+      It is recommended that the sample application be downloaded and opened using Visual
+      Studio 2005. Doing so will save time and help with the understanding of the different
+      aspects of this demonstration as they are mentioned.
+   </p>
+   <h2>
+      What to Expect From This Article</h2>
+   <p>
+      This article will explain how to create a custom configuration section. It explains
+      how to implement the Configuration Manager API base classes that are require for
+      reading the custom configuration section. Then it describes how to create a wrapper
+      class that mimics the AppSettings class with a slight twist to make it environment
+      aware based on the “codebase” setting. This article will explain how to do the following:
+   </p>
+   <ul>
+      <li>Configure a custom configuration section in the application configuration file.</li>
+      <li>How to implement the Configuration Manager API base classes to read the custom
+         configuration section.
+         <ul>
+            <li>Implementing System.Configuration.ConfigurationElement</li>
+            <li>Implementing System.Configuration.ConfigurationElementCollection</li>
+            <li>Implementing System.Configuration.ConfigurationSection</li>
+         </ul>
+      </li>
+      <li>Creating a wrapper class that mimiks System.Configuration.ConfigurationManager.AppSettings</li>
+      <li>Configuring Visual Studio for intellisence and validation of the XML tags for the
+         custom configuration section in the configuration file.</li>
+   </ul>
+   <h2>
+      How It Works</h2>
+   <p>
+      A new appSettings setting called Codebase will need to be created in the Machine.Config
+      file. This setting tells the SHI.WebTeam.Common.Configuration.ConfigurationSettings.AppSettings
+      class which setting to retrieve and store for the environment the application is
+      being executed.
+      <br />
+      <br />
+      The SHI.WebTeam.Common.Configuration.ConfigurationSettings.AppSettings class also
+      retrieves the settings stored in the default appSettings section of the configuration
+      file. All settings in the shiSettings section will override the settings in the
+      appSettings section. The functionality of the appSettings section has not been modified.
+      All settings in the appSettings section of the configuration file are the same regardless
+      of the codebase value.
+      <br />
+      <br />
+      The SHI.WebTeam.Common.Configuration wrapper class has a static property called
+      AppSettings which returns a NameValueCollection mimicking Microsoft’s implementation
+      of System.Configuration.ConfigurationManager.AppSettings.
+   </p>
+   <h2>
+      Implementing System.Configuration.ConfigurationElement
+   </h2>
+   <p>
+      The code listed below implements the System.Configuration.ConfigurationElement.
+      It represents an element within a configuration file.&nbsp;
+   </p>
+   <p>
+      An element within a configuration file refers to a basic XML element or a section.
+      The basic element is a simple XML tag with related attributes. A section coincides
+      with a basic element. Complex sections can contain one or more basic elements, a
+      collection of elements, and other sections.
+   </p>
+   <p>
+      This class represents the XML data stored in the shiSettings section in the configuration
+      file. Basically this is creating the map between the class and the XML. Rather than
+      having to deal with the XML directly the ConfugationManager handles it. If new attributes
+      are added to the shiSettings “Add” element in the configuration file it must also
+      be defined in this class too.&nbsp;</p>
+   <pre lang=cs>/*********************************************************************
+ * Developer     : Dennis Fazekas
+ * Date          : September 2007
+ * Description   : This class maps the attributes elements in the 
+ *                 configuration file to this class. Represents the
+ *                 &lt;add /&gt; element.
+ * 
+ * Changes
+ * --------------------------------------------------------------------
+ * Date       | Developer       | Description
+ * --------------------------------------------------------------------
+ * 09/04/2007 | Dennis Fazekas  | Creation
+**********************************************************************/
+
+using System;
+
+namespace SHI.WebTeam.Common.ConfigurationManager
+{
+   /// &lt;summary&gt;
+   /// This class represents the structure of the SHI settings structure 
+   /// in the WebConfig.Conf or App.Conf. These are the attributes.
+   /// &lt;/summary&gt;
+   public class ShiSettingElements : System.Configuration.ConfigurationElement
+   {
+      /// &lt;summary&gt;
+      /// Returns the key value.
+      /// &lt;/summary&gt;
+      [System.Configuration.ConfigurationProperty("key", IsRequired = true)]
+      public string Key
+      {
+         get
+         {
+            return this["key"] as string;
+         }
+      }
+      /// &lt;summary&gt;
+      /// Returns the setting value for the production environment.
+      /// &lt;/summary&gt;
+      [System.Configuration.ConfigurationProperty("prod", IsRequired = true)]
+      public string Prod
+      {
+         get
+         {
+            return this["prod"] as string;
+         }
+      }
+      /// &lt;summary&gt;
+      /// Returns the setting value for the development environment.
+      /// &lt;/summary&gt;
+      [System.Configuration.ConfigurationProperty("dev", IsRequired = true)]
+      public string Dev
+      {
+         get
+         {
+            return this["dev"] as string;
+         }
+      }
+      /// &lt;summary&gt;
+      /// Returns the setting description.
+      /// &lt;/summary&gt;
+      [System.Configuration.ConfigurationProperty("desc", IsRequired = false)]
+      public string Desc
+      {
+         get
+         {
+            return this["desc"] as string;
+         }
+      }
+   }
+}   
+   </pre>
+   <h2>
+      Implementing System.Configuration.ConfigurationElementCollection
+   </h2>
+   <p>
+      The ConfigurationElementCollection represents a collection of elements within a
+      configuration file. This class is a collection of all the shiSettings stored in
+      the configuration file.&nbsp;</p>
+   <pre lang=cs>/*********************************************************************
+ * Developer     : Dennis Fazekas
+ * Date          : September 2007
+ * Description   : This class is the collection of settings loaded
+ *                 from the WebConfig.Conf or App.Conf.
+ * 
+ * Changes
+ * --------------------------------------------------------------------
+ * Date       | Developer       | Description
+ * --------------------------------------------------------------------
+ * 09/04/2007 | Dennis Fazekas  | Creation
+**********************************************************************/
+using System;
+
+namespace SHI.WebTeam.Common.ConfigurationManager
+{
+   public class ShiSettingCollection : 
+      System.Configuration.ConfigurationElementCollection
+   {
+      public ShiSettingElements this[int index]
+      {
+         get
+         {
+            return base.BaseGet(index) as ShiSettingElements;
+         }
+         set
+         {
+            if (base.BaseGet(index) != null)
+            {
+               base.BaseRemoveAt(index);
+            }
+            this.BaseAdd(index, value);
+         }
+      }
+      protected override System.Configuration.ConfigurationElement CreateNewElement()
+      {
+         return new ShiSettingElements();
+      }
+
+      protected override object GetElementKey(System.Configuration.ConfigurationElement element)
+      {
+         return ((ShiSettingElements)element).Key;
+      }
+   }
+}
+   </pre>
+   <h2>
+      Implementing System.Configuration.ConfigurationSection
+   </h2>
+   <p>
+      The ConfigurationSection class implements the custom section type. The ConfigurationSection
+      class provides custom handling and programmatic access to custom configuration sections.
+      This class retrieves the shiSettings from the "shiConfiguration" section in the
+      configuration file.</p>
+   <pre lang=cs>/*********************************************************************
+ * Developer     : Dennis Fazekas
+ * Date          : September 2007
+ * Description   : 
+ * 
+ * Changes
+ * --------------------------------------------------------------------
+ * Date       | Developer       | Description
+ * --------------------------------------------------------------------
+ * 09/04/2007 | Dennis Fazekas  | Creation
+**********************************************************************/
+using System;
+using System.Web.Configuration;
+
+namespace SHI.WebTeam.Common.ConfigurationManager
+{
+   /// &lt;summary&gt;
+   /// This class is actually what loads the custom settings.
+   /// &lt;/summary&gt;
+   public class ShiConfiguration : System.Configuration.ConfigurationSection
+   {
+      private static string sConfigurationSectionConst = "shiConfiguration";
+
+      /// &lt;summary&gt;
+      /// Returns an shiConfiguration instance
+      /// &lt;/summary&gt;
+      public static ShiConfiguration GetConfig()
+      {
+
+         return (ShiConfiguration)System.Configuration.ConfigurationManager.
+            GetSection(ShiConfiguration.sConfigurationSectionConst) ??
+            new ShiConfiguration();
+
+      }
+      [System.Configuration.ConfigurationProperty("shiSettings")]
+      public ShiSettingCollection shiSettings
+      {
+         get
+         {
+            return (ShiSettingCollection)this["shiSettings"] ?? 
+               new ShiSettingCollection();
+         }
+      }
+   }
+}
+   </pre>
+   <h2>
+      Creating the Wrapper Class
+   </h2>
+   <p>
+      This class loads the settings from the configuration file using the classes created
+      above into a static NameValueCollection based on the current codebase value. The
+      code has been commented to try to explain what’s going on. Take notice to the “AppSettings”
+      property; it returns a static indexer using the <a href="http://en.wikipedia.org/wiki/Singleton_pattern"
+         target="_blank">Singleton</a> technique. There is also a private sub class called
+      ShiSettingsSection which loads the shiSettings and the AppSettings sections into
+      the NameValueCollection based on the codebase.
+   </p>
+   <pre lang=cs>/*********************************************************************
+ * Developer     : Dennis Fazekas
+ * Date          : September 2007
+ * Description   : This class is the wrapper which loads the settings
+ *                 stored in the shiSettings section in the 
+ *                 configuration file. (Web.Config or App.Config)
+ *                 Settings returned by this class are based on the
+ *                 value of the Codebase setting in the machine.conf
+ *                 file. The AppSettings property has been designed
+ *                 to mimic Microsoft's AppSettings.
+ * Changes
+ * --------------------------------------------------------------------
+ * Date       | Developer       | Description
+ * --------------------------------------------------------------------
+ * 09/04/2007 | Dennis Fazekas  | Creation
+**********************************************************************/
+using System;
+using SHI.WebTeam.Common.Configuration.Enum;
+using System.Collections.Specialized;
+using System.Collections;
+
+namespace SHI.WebTeam.Common.Configuration.Enum
+{
+   public enum CodeBases { Development, Production, Invalid, NotSet };
+}
+
+namespace SHI.WebTeam.Common.Configuration
+{
+   public class ConfigurationSettings
+   {
+      private static object sLockingObject = new object();
+      private static CodeBases sCodebase = CodeBases.NotSet;
+      private static ShiSettingsSection sSettings = null;
+
+      /// &lt;summary&gt;
+      /// Gets the SHI.Configuration.AppSettingsSection data based on the 
+      /// machine's codebase for the current application's codebase default settings.
+      /// In addition gets the System.Configuration.AppSettingSection data for 
+      /// the current application's default settings if the setting does not 
+      /// exist in the SHI.Configuration.AppSettingsSection.
+      /// &lt;/summary&gt;
+      /// &lt;param name="name"&gt;The name of the setting to be retreived.&lt;/param&gt;
+      /// &lt;returns&gt;Returns the setting specified.&lt;/returns&gt;
+      [System.Diagnostics.DebuggerNonUserCode()]
+      public static NameValueCollection AppSettings
+      {
+            lock (sLockingObject)
+            {
+	      //If the settings weren't loaded then load them.
+               if (sSettings == null)
+               {
+                  sSettings = new ShiSettingsSection();
+                  sSettings.GetSettings();
+               }
+            }
+            return (NameValueCollection)sSettings;
+      }
+      /// &lt;summary&gt;
+      /// Gets the Codebase setting in which the application is being executed.
+      /// &lt;/summary&gt;
+      static public CodeBases CodeBase
+      {
+         get
+         {
+            if (ConfigurationSettings.sCodebase == CodeBases.NotSet)
+            {
+               //Get the codebase value from the config file.
+               string ConfigCodeBase =
+                  System.Configuration.ConfigurationManager.
+                  AppSettings["Codebase"].ToLower();
+
+               //Convert the codebase string to the enum value.
+               if (ConfigCodeBase == "prod")
+                  ConfigurationSettings.sCodebase = CodeBases.Production;
+               else if (ConfigCodeBase == "dev")
+                  ConfigurationSettings.sCodebase = CodeBases.Development;
+               else
+                  ConfigurationSettings.sCodebase = CodeBases.Invalid;
+            }
+
+            return ConfigurationSettings.sCodebase;
+         }
+      }
+
+      /// &lt;summary&gt;
+      /// Validates the value of the codebase setting. If the value is not
+      /// supported an exception is thrown.
+      /// 
+      /// The codebase settings should be set in the machine.config file usually
+      /// located at \WINDOWS\Microsoft.NET\Framework\v2.X.X\Config\Machine.Config.
+      /// 
+      /// In the appSettings section create a key called "codebase" and a value of
+      /// "Prod" or "Dev". Missing values or other values will be concidered
+      /// invalid.
+      /// &lt;returns&gt;Returns the value of the codebase setting machine.config file.&lt;/returns&gt;
+      [System.Diagnostics.DebuggerNonUserCode()]
+      static private CodeBases validateCodebase()
+      {
+         if (ConfigurationSettings.CodeBase == CodeBases.NotSet)
+         {   //The codebase setting is not configured throw an exception.
+            throw new Exception("Missing codebase value in the machine.config " +
+                "file under the appSettings. Allowed values are \"prod\" and \"dev\"");
+         }
+         else if (ConfigurationSettings.CodeBase == CodeBases.Invalid)
+         {   //The codebase isn't the expected value throw an exception.
+            throw new Exception("Invalid codebase value in the machine.config file " +
+                "under the appSettings. Allowed values are \"prod\" and \"dev\"");
+         }
+
+         //The codebase was set and value, so return the current machine codebase.
+         return ConfigurationSettings.CodeBase;
+      }
+
+      #region Private shiSettingsSection Class
+      private class ShiSettingsSection : NameValueCollection
+      {
+         /// &lt;summary&gt;
+         /// Populates the collection with the SHI and Application Settings 
+         /// based on the current codebase.
+         /// &lt;/summary&gt;
+         [System.Diagnostics.DebuggerNonUserCode()]
+         public void GetSettings()
+         {
+            //If the settings collection is not populated, populate it.
+            if (base.Count == 0)
+            {
+               //Validate the codebase and get the current Codebase.
+               CodeBases codebase = validateCodebase();
+
+               //Load the ShiConfiguration section from the .Config file.
+               SHI.WebTeam.Common.ConfigurationManager.ShiConfiguration ConfigSettings =
+                  SHI.WebTeam.Common.ConfigurationManager.ShiConfiguration.GetConfig();
+
+               //Only populate if the section exists.
+               if (ConfigSettings != null)
+               {
+                  //Add the setting for the current machine's codebase to the 
+                  //settings collection. Current Codebases values are "Production"
+                  //and "Development". The validateCodebase method inforces this.
+                  for (int i = 0; i &lt; ConfigSettings.shiSettings.Count; i++)
+                  {
+                     if (ConfigurationSettings.CodeBase == CodeBases.Production)
+                     {
+                        base.Add(ConfigSettings.shiSettings[i].Key,
+                            ConfigSettings.shiSettings[i].Prod);
+                     }
+                     else if (ConfigurationSettings.CodeBase == CodeBases.Development)
+                     {
+                        base.Add(ConfigSettings.shiSettings[i].Key,
+                            ConfigSettings.shiSettings[i].Dev);
+                     }
+                     else
+                     {
+                        throw new Exception("The configured codebase value is " +
+                           "not currently implemented.");
+                     }
+                  }
+               }
+
+               // Load System.ConfigurationManager.AppSettings for all settings
+               // not loaded in the SHI Configuration Setting Section.
+               NameValueCollection appSettings = 
+                  System.Configuration.ConfigurationManager.AppSettings;
+               for (int i = 0; i &lt; appSettings.Count; i++)
+               {
+                  string key = appSettings.Keys[i];
+
+                  //If the Key does not exist in the SHI settings add it.
+                  if (base[key] == null)
+                  {
+                     base.Add(key, appSettings[i]);
+                  }
+               }
+            }
+         }
+         #region Overrides
+         /// &lt;summary&gt;
+         /// This configuration is read only and calling this method will throw an exception.
+         /// &lt;/summary&gt;
+         [System.Diagnostics.DebuggerNonUserCode()]
+         public override void Clear()
+         {
+            throw new Exception("The configuration is read only.");
+         }
+         /// &lt;summary&gt;
+         /// This configuration is read only and calling this method will throw an exception.
+         /// &lt;/summary&gt;
+         [System.Diagnostics.DebuggerNonUserCode()]
+         public override void Add(string name, string value)
+         {
+            throw new Exception("The configuration is read only.");
+         }
+         /// &lt;summary&gt;
+         /// This configuration is read only and calling this method will throw an exception.
+         /// &lt;/summary&gt;
+         [System.Diagnostics.DebuggerNonUserCode()]
+         public override void Remove(string name)
+         {
+            throw new Exception("The configuration is read only.");
+         }
+         /// &lt;summary&gt;
+         /// This configuration is read only and calling this method will throw an exception.
+         /// &lt;/summary&gt;
+         [System.Diagnostics.DebuggerNonUserCode()]
+         public override void Set(string name, string value)
+         {
+            throw new Exception("The configuration is read only.");
+         }
+         #endregion
+      }
+      #endregion
+   }
+}   
+   </pre>
+   <h2>
+      Configurating the Configuration file for the Custom Configuration Section</h2>
+   <p>
+      In order for the .Net Framework to understand the new configuration section the
+      &lt;configSections&gt; element will need to be added to the Web.Config, App.Config,
+      or Machine.Config file.&nbsp;
+   </p>
+   <p>
+      Since the included sample application is an ASP.NET application we will add these
+      settings to the web.config file.
+   </p>
+   <p>
+      Add the following XML into the application configuration file inside the &lt;configuration&gt;...&lt;/configuration&gt;
+      elements.
+   </p>
+   <pre lang=xml>&lt;!-- This tells the Configuration Manager API about the section handler implementation. --&gt;
+&lt;section name="shiConfiguration" 
+      type="SHI.WebTeam.Common.ConfigurationManager.ShiConfiguration, 
+	      ShiConfigurationSectionHandler, 
+	      Version=1.0.0.0, 
+	      Culture=neutral" 
+      restartOnExternalChanges="false" 
+      requirePermission="false" 
+/&gt;
+
+&lt;!-- Place all environment specific setting in this section. --&gt;
+&lt;shiConfiguration&gt;
+	&lt;shiSettings&gt;
+		&lt;add key="SettingName" 
+			prod="Production Setting" 
+			dev="Development Setting" 
+			desc="Some description, but not required."
+		/&gt;
+		&lt;add key="testing" 
+			prod="Hello production world!" 
+			dev="Hello development world!"
+		/&gt;
+	&lt;/shiSettings&gt;
+&lt;/shiConfiguration&gt;      
+   </pre>
+   <h2>
+      XML Tag Intellisence and Validation in the Configuration File
+   </h2>
+   <p>
+      Visual Studio 2005 will need to be configured on how to interpret the new configuration
+      section in the configuration file. Once this has been completed intellisence and
+      tag validations will begin working for the new configuration section. A new schema
+      section will need to be added to the DotNetConfig.xsd file.
+   </p>
+   <p>
+      Edit the DotNetConfig.xsd usually located in the “C:\Program Files\Microsoft Visual
+      Studio 8\Xml\Schemas\DotNetConfig.xsd” folder. If the file cannot be located do
+      a search on all drives on the system. <b><i></i>I recommend making a backup copy of
+         the file prior to modifing it.</b></p>
+   <p>
+      Once the file has been located open it in Notepad.exe and add the following xml
+      snip-it:
+   </p>
+   <pre lang=xml>&lt;xs:element name="shiConfiguration" vs:help="configuration/shiConfiguration"&gt;
+   &lt;xs:complexType&gt;
+   &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+       &lt;xs:element name="shiSettings" vs:help="configuration/shiConfiguration/shiSettings"&gt;
+           &lt;xs:complexType&gt;
+               &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+          	      &lt;xs:element name="add" vs:help="configuration/shiConfiguration/shiSettings/add"&gt;
+                       &lt;xs:complexType&gt;
+          		      &lt;xs:attribute name="key" type="xs:string" use="required" /&gt;
+	      &lt;xs:attribute name="prod" type="xs:string" use="required" /&gt;
+	      &lt;xs:attribute name="dev" type="xs:string" use="required" /&gt;
+	      &lt;xs:attribute name="desc" type="xs:string" use="optional" /&gt;
+                       &lt;/xs:complexType&gt;
+          	      &lt;/xs:element&gt;
+                   &lt;xs:element name="remove" vs:help="configuration/shiConfiguration/shiSettings/remove"&gt;
+          	          &lt;xs:complexType&gt;
+                     	      &lt;xs:attribute name="key" type="xs:string" use="optional" /&gt;
+          	          &lt;/xs:complexType&gt;
+                   &lt;/xs:element&gt;
+                   &lt;xs:element name="clear" vs:help="configuration/shiConfiguration/shiSettings/clear"&gt;
+          	          &lt;xs:complexType&gt;
+                           &lt;!--tag is empty--&gt;
+          &lt;/xs:complexType&gt;
+                   &lt;/xs:element&gt;
+               &lt;/xs:choice&gt;
+           &lt;/xs:complexType&gt;
+       &lt;/xs:element&gt;
+   &lt;/xs:choice&gt;
+   &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;  
+   </pre>
+   <h2>
+      Important Side Notes</h2>
+   <ul>
+      <li>If this assembly is used on a web server I recommend installing it into the GAC
+         (Global Assembly Cache). I would also suggest putting the &lt;configSections&gt;
+         into the machine.confg file. This way it's global to the entire server.</li>
+      <li>Do not put the CodeBase setting into the App.Config or Web.Config file. Put it
+         into the Machine.Config. Isn't the whole idea to avoid putting environment specific
+         setting into the wrong environment?</li>
+      <li>The Configuration Section must be added to the configuration file.</li>
+   </ul>
+   <h2>
+      Points of Interest</h2>
+   <ul>
+      <li>In C# there isn't a way to create static indexers. The workaround is quite simple
+         and accomplishes the same task. It's called <a target="_blank" href="http://en.wikipedia.org/wiki/Singleton_pattern">
+            Singleton pattern</a>. Check out the link for more details. This is a cool trick
+         to know. </li>
+   </ul>
+   <h2>
+      Using the code</h2>
+   <p>
+      To retreive settings from the custom configuration section simply do the following.</p>
+   <pre lang=xml>   &lt;!-- Put this code into the web.config or app.config file. --&gt;
+   &lt;shiConfiguration&gt;
+      &lt;shiSettings&gt;
+         &lt;add key="SettingName" prod="Production Setting" dev="Development Setting" desc="Some description, but not required."/&gt;
+         &lt;add key="testing" prod="Hello production world!" dev="Hello development world!"/&gt;
+      &lt;/shiSettings&gt;
+   &lt;/shiConfiguration&gt;
+   </pre>
+   Below is an example of a public class called “Something”. Notice when getting settings
+   using the SHI implementation it similar to the way Mictosoft's AppSettings works.
+   By simply changing the using directive from System.Configuration to SHI.WebTeam.Common.Configuration
+   makes the code environment aware.
+   <pre lang=cs>
+using SHI.WebTeam.Common.Configuration;
+
+public class Something
+{
+   public Somthing()
+   {
+	//Gets the setting from the SHI Custom Configuration Section, NOT Microsoft's
+	string Testing = ConfigurationSettings.AppSettings["testing"];
+	string SettingName = ConfigurationSettings.AppSettings["SettingName"];
+
+	//Remember the SHI implementation also loads the setting from the AppSettings section
+	string AnAppSettingsSetting = ConfigurationSettings.AppSettings["appSettings"];
+
+	...
+   }
+}   
+   </pre>
+   <h2>
+      Conclusion
+   </h2>
+   <p>
+      Let me start off by saying this is the first time I've posted anything to the site.
+      So I hope I did a good job and explained everything thoroughly enough. I hope you
+      enjoyed this example and find it useful. If there are any questions or comments
+      please feel free to contact me.
+   </p>
+   <!-------------------------------    That's it!   --------------------------->
+</body>
+</html>
