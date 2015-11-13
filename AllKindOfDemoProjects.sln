@@ -33,6 +33,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebFormsSite", "http://loca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObserverPattern", "ObserverPattern\ObserverPattern.csproj", "{4BE6D02E-227B-4F65-A2F2-50348BFB74EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{B8864B55-38F2-41A0-A829-E617CCD60294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyKindOfTests", "AnyKindOfTests\AnyKindOfTests.csproj", "{123F4871-E64E-4343-98B9-BFC1176213E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{4BE6D02E-227B-4F65-A2F2-50348BFB74EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BE6D02E-227B-4F65-A2F2-50348BFB74EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BE6D02E-227B-4F65-A2F2-50348BFB74EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8864B55-38F2-41A0-A829-E617CCD60294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8864B55-38F2-41A0-A829-E617CCD60294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8864B55-38F2-41A0-A829-E617CCD60294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8864B55-38F2-41A0-A829-E617CCD60294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{123F4871-E64E-4343-98B9-BFC1176213E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{123F4871-E64E-4343-98B9-BFC1176213E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{123F4871-E64E-4343-98B9-BFC1176213E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{123F4871-E64E-4343-98B9-BFC1176213E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

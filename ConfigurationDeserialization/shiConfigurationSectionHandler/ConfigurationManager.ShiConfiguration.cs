@@ -11,8 +11,7 @@
  * 09/04/2007 | Dennis Fazekas  | Added these comments
  * 09/12/2007 | Dennis Fazekas  | Changed Namespace
 **********************************************************************/
-using System;
-using System.Web.Configuration;
+
 
 namespace SHI.WebTeam.Common.ConfigurationManager
 {

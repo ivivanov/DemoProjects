@@ -34,6 +34,7 @@ namespace SHI.WebTeam.Common.ConfigurationManager
             this.BaseAdd(index, value);
          }
       }
+
       protected override System.Configuration.ConfigurationElement CreateNewElement()
       {
          return new ShiSettingElements();
