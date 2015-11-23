@@ -1,27 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Text;
 using System.Configuration;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-
-namespace WebapiWithOauth
-{
-    public class WebApiApplication : System.Web.HttpApplication
-    {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            Samples.AspNet.PageAppearanceSection config =
-            (Samples.AspNet.PageAppearanceSection)ConfigurationManager.GetSection("pageAppearanceGroup/pageAppearance");
-        }
-    }
-}
+using System.Xml;
 
 namespace Samples.AspNet
 {

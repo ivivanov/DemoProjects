@@ -13,7 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObserverPattern", "Observer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebapiWithOauth", "WebapiWithOauth\WebapiWithOauth.csproj", "{1A693B5B-809F-41BE-844F-B41EB4940707}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{034A4DE5-8814-4B93-94D0-C419065440BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadWebConfig", "ReadWebConfig\ReadWebConfig.csproj", "{8E4CDE87-3D48-4198-8F8F-8D97E7B4E94C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeExecuteFuncAsParam", "SafeExecuteFuncAsParam\SafeExecuteFuncAsParam.csproj", "{E86530DA-FCDF-495C-B4C3-259A3144EC7E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ImageUploader", "ImageUploader\ImageUploader.xproj", "{9E0B7884-6B03-4AE9-A6EE-6382744479B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Images", "Images\Images.csproj", "{65D261A6-F091-415D-908F-754C2E5220A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +47,22 @@ Global
 		{1A693B5B-809F-41BE-844F-B41EB4940707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A693B5B-809F-41BE-844F-B41EB4940707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A693B5B-809F-41BE-844F-B41EB4940707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{034A4DE5-8814-4B93-94D0-C419065440BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{034A4DE5-8814-4B93-94D0-C419065440BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{034A4DE5-8814-4B93-94D0-C419065440BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{034A4DE5-8814-4B93-94D0-C419065440BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E4CDE87-3D48-4198-8F8F-8D97E7B4E94C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E4CDE87-3D48-4198-8F8F-8D97E7B4E94C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E4CDE87-3D48-4198-8F8F-8D97E7B4E94C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E4CDE87-3D48-4198-8F8F-8D97E7B4E94C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86530DA-FCDF-495C-B4C3-259A3144EC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86530DA-FCDF-495C-B4C3-259A3144EC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86530DA-FCDF-495C-B4C3-259A3144EC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86530DA-FCDF-495C-B4C3-259A3144EC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E0B7884-6B03-4AE9-A6EE-6382744479B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E0B7884-6B03-4AE9-A6EE-6382744479B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E0B7884-6B03-4AE9-A6EE-6382744479B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0B7884-6B03-4AE9-A6EE-6382744479B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65D261A6-F091-415D-908F-754C2E5220A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D261A6-F091-415D-908F-754C2E5220A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D261A6-F091-415D-908F-754C2E5220A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D261A6-F091-415D-908F-754C2E5220A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
