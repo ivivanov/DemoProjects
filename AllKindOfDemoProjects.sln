@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafeExecuteFuncAsParam", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqTests", "LinqTests\LinqTests.csproj", "{3C64B420-3A33-4C76-A190-18FE4B9365B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger", "Swagger\Swagger.csproj", "{7B2626CD-A079-45A2-870F-4DCA670046EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3C64B420-3A33-4C76-A190-18FE4B9365B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C64B420-3A33-4C76-A190-18FE4B9365B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C64B420-3A33-4C76-A190-18FE4B9365B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2626CD-A079-45A2-870F-4DCA670046EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2626CD-A079-45A2-870F-4DCA670046EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2626CD-A079-45A2-870F-4DCA670046EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2626CD-A079-45A2-870F-4DCA670046EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
