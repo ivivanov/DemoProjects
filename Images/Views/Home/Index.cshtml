@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <form action="/" method="post" id="imageform">
+
+        <div class="col-md-4">
+            <h2>Image upload</h2>
+            <div>
+                <div>
+                    <input type="file" id="filePicker">
+                </div>
+                <div>
+                    <input type="submit">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <textarea id="base64textarea" placeholder="Base64 will appear here" cols="50" rows="15"></textarea>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    var apiurl = "http://localhost:22546/api/images";
+
+    +function ($) {
+
+        var form = $("#imageform");
+        var picker = $("#filePicker");
+
+        form.submit(function (ev) {
+            ev.preventDefault();
+            var base64img = document.getElementById("base64textarea").value;
+            var data = [{
+                activityId: "9",
+                originalFileName: picker.text,
+                fileExtension: ".jpg",
+                base64Content: base64img
+            }];
+            httpRequester.postJSON(apiurl, data, function (su) {
+                console.log(su);
+            }, function (er) {
+                console.log(er);
+            })
+        })
+
+
+
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            picker.change(function (evt) {
+                var files = evt.target.files;
+                var file = files[0];
+
+                if (files && file) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (readerEvt) {
+                        var binaryString = readerEvt.target.result;
+                        document.getElementById("base64textarea").value = btoa(binaryString);
+                    };
+
+                    reader.readAsBinaryString(file);
+                }
+            });
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+
+    }(window.jQuery)
+
+    var httpRequester = (function () {
+        function getJSON(url, success, error) {
+            $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                success: success,
+                error: error
+            });
+        }
+
+        function postJSON(url, data, success, error) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: success,
+                error: error
+            });
+        }
+
+        return {
+            getJSON: getJSON,
+            postJSON: postJSON
+        };
+    }());
+
+</script>
