@@ -24,21 +24,21 @@ namespace PlayingWithTasks
             {
                 Console.WriteLine("a");
                 a.DoWork();
-                Console.WriteLine($"taskA ready for {sw.Elapsed}");
+                Console.WriteLine($"taskA ready at {sw.Elapsed}");
             });
 
             Task taskB = Task.Delay(maxDelay - b.ResponseTime).ContinueWith(x =>
             {
                 Console.WriteLine("b");
                 b.DoWork();
-                Console.WriteLine($"taskB ready for {sw.Elapsed}");
+                Console.WriteLine($"taskB ready at {sw.Elapsed}");
             });
 
             Task taskC = Task.Delay(maxDelay - c.ResponseTime).ContinueWith(x =>
             {
                 Console.WriteLine("c");
                 c.DoWork();
-                Console.WriteLine($"taskC ready for {sw.Elapsed}");
+                Console.WriteLine($"taskC ready at {sw.Elapsed}");
             });
 
             Task.WaitAll(new Task[] { taskA, taskB, taskC});
