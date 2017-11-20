@@ -10,8 +10,8 @@ namespace PlayingWithTasks
     {
         static void Main(string[] args)
         {
-            TaskDelay.Start();
-            //new TimerAndTasks().Start();
+            //TaskDelay.Start();
+            new TimerAndTasks().Start();
             Console.Read();
         }
     }

@@ -56,6 +56,8 @@ namespace PlayingWithTasks
                 Console.WriteLine($"{DateTime.Now.TimeOfDay}### Task C Finished ### \n\n");
             });
             timerC.Start();
+
+            Console.WriteLine("END");
         }
 
         class ServiceA
