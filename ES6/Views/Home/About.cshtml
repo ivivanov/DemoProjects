@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<div id="log"></div>
+<script>
+    "use strict";
+    let logger = msg => {
+        //let tmp = `Unixdate ${Date.now()}: ${msg}`;
+        //let p = document.createElement('p');
+        //p.innerText = msg;
+        //let log = document.getElementById("log");
+        //log.appendChild(p);
+        console.log(msg);
+    };
+
+    class Company {
+        constructor() {
+            this.employees = [];
+        }
+
+        addEmployees(...names) {
+            this.employees = this.employees.concat(names);
+        }
+        [Symbol.iterator]() {
+            return new ArrayIterator(this.employees);
+        }
+    }
+
+    class Person {
+        constructor(name, ...skills) {
+            this.name = name;
+            this.skills = skills;
+        }
+
+        [Symbol.iterator]() {
+            return new ArrayIterator(this.skills);
+        }
+
+        *getSkills() {
+            for (var i of this.skills) {
+                yield i;
+            }
+
+        }
+    }
+
+    class ArrayIterator {
+        constructor(arr) {
+            this.arr = arr;
+            this.i = 0;
+        }
+        next() {
+            let result = { value: undefined, done: true };
+            if (this.i < this.arr.length) {
+                result.value = this.arr[this.i];
+                result.done = false;
+                this.i += 1;
+            }
+            return result;
+        }
+    }
+
+    let getNumbers = function* () {
+        yield 1;
+        yield 2;
+        yield 3;
+    };
+
+
+
+    let getRequestBitMex = new Promise(function (success, error) {
+        debugger
+        let url = "https://www.bitmex.com/api/v1";
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status === 200) {
+                success(xhr.response);
+            } else {
+                error(xhr.response);
+            }
+        };
+        xhr.send();
+    })
+
+    let fullPromise = new Promise((success, error) => {
+        setTimeout(() => success("fullPromise"), 1500);
+    });
+
+    let promiseOnlyResolve = Promise.resolve("promiseOnlyResolve");
+
+    try {
+        //let count = 0;
+        //let company = new Company();
+        //company.addEmployees("Tim", "Sue", "Joy", "Tom");
+
+        //for (let employee of company) {
+        //    count += 1;
+        //}
+        //logger(count);
+        //let person = new Person("Ivan", "JS", "C#", "HTML");
+        //for (let i of person) {
+        //    logger(i);
+        //}
+
+        //for (let i of person.getSkills()) {
+        //    logger(i);
+        //}
+
+        //let iter = getNumbers();
+        //let next = iter.next();
+        //while (!next.done) {
+        //    logger(next.value);
+        //    next = iter.next();
+        //}
+
+        fullPromise.then(data => logger(data));
+        promiseOnlyResolve.then(data => logger(data));
+    } catch (e) {
+        logger(e.stack);
+    }
+
+
+
+</script>
