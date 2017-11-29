@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PlayingWithTasks
@@ -11,8 +12,14 @@ namespace PlayingWithTasks
         static void Main(string[] args)
         {
             //TaskDelay.Start();
-            new TimerAndTasks().Start();
-            Console.Read();
+            //new TimerAndTasks().Start();
+            //new Threads().Start();
+            //new ThreadsConcurency().Start();
+            new TwoThreadsSameData().Start();
+            //new ForeGRAndBGR().Start();
+
+            Thread.Sleep(500);
+            Console.WriteLine("end");
         }
     }
 }
