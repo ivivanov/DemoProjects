@@ -9,57 +9,62 @@ namespace PlayingWithTasks
 {
     class ThreadsConcurency
     {
-        private int[] arr;
+        private int divider;
+        private int val;
         private Random rnd;
         private readonly object locker = new object();
 
         public ThreadsConcurency()
         {
-            this.arr = new int[1000];
+            divider = 1;
+            val = 1;
             this.rnd = new Random();
         }
 
         internal void Start()
         {
-            Thread fillArr = new Thread(() =>
+            Thread doWorkTaskOne = new Thread(() =>
             {
                 Console.WriteLine($"Started: {Thread.CurrentThread.Name}");
-                for (int i = 0; i < this.arr.Length; i++)
+                while (true)
                 {
-                    arr[i] = 1;
+                    DoWork();
                 }
             });
 
-            fillArr.Name = nameof(fillArr);
+            doWorkTaskOne.Name = nameof(doWorkTaskOne);
 
-            Thread zeroArr = new Thread(() =>
+            Thread doWorkTaskTwo = new Thread(() =>
             {
                 Console.WriteLine($"Started: {Thread.CurrentThread.Name}");
-                for (int i = 0; i < this.arr.Length; i++)
+                while (true)
                 {
-                    arr[i] = 0;
+                    DoWork();
                 }
             });
 
-            zeroArr.Name = nameof(zeroArr);
+            doWorkTaskTwo.Name = nameof(doWorkTaskTwo);
 
-            Thread printArr = new Thread(() =>
+            doWorkTaskOne.Start();
+            doWorkTaskTwo.Start();
+        }
+
+        private void DoWork()
+        {
+            //Uncoment to prevent dirty read of divider
+            //lock (locker)
             {
-                Console.WriteLine($"Started: {Thread.CurrentThread.Name}");
-                foreach (var item in arr)
+                double result = 0;
+
+                if (divider != 0)
                 {
-                    Console.Write(item);
+                    Thread.Sleep(1);// representation of some time consuming operation
+                    result = val / divider;
                 }
 
-            });
-
-            printArr.Name = nameof(printArr);
-
-            fillArr.Start();
-            zeroArr.Start();
-            printArr.Start();
-            printArr.Join();
-            Console.WriteLine("end");
+                divider = rnd.Next(0, 2);
+                Console.WriteLine(divider);
+            }
         }
     }
 }

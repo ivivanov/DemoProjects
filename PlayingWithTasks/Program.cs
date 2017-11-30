@@ -14,12 +14,11 @@ namespace PlayingWithTasks
             //TaskDelay.Start();
             //new TimerAndTasks().Start();
             //new Threads().Start();
-            //new ThreadsConcurency().Start();
-            new TwoThreadsSameData().Start();
+            new ThreadsConcurency().Start();
+            //new TwoThreadsSameData().Start();
             //new ForeGRAndBGR().Start();
 
             Thread.Sleep(500);
-            Console.WriteLine("end");
         }
     }
 }
