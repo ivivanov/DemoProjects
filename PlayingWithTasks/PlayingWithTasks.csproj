@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Deadlock.cs" />
     <Compile Include="ForeGRAndBGR.cs" />
+    <Compile Include="Mutex.cs" />
     <Compile Include="TwoThreadsSameData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

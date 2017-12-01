@@ -21,28 +21,8 @@ namespace PlayingWithTasks
             //new TwoThreadsSameData().Start();
             //new ForeGRAndBGR().Start();
             //new Deadlock().Start();
-
-            //Console.WriteLine("end");
-
-            new Thread(() =>
-            {
-                Console.WriteLine("hello from NT");
-                lock (locker1)
-                {
-                    Console.WriteLine("NT 1st lock");
-                    Thread.Sleep(1000);
-                    lock (locker2) { Console.WriteLine("NT 2nd lock"); }
-                }
-            }).Start();
-
-            Console.WriteLine("main thread");
-
-            lock (locker2)
-            {
-                Console.WriteLine("main 2nd lock");
-                Thread.Sleep(1000);
-                lock (locker1) { Console.WriteLine("main 1st lock"); }
-            }
+            new TestMutex().Start();
+            Console.WriteLine("end");
         }
     }
 }
