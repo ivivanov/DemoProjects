@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlayingWithTasks
 {
-    public class TestMutex
+    public class MutexDemo
     {
         public void Start()
         {

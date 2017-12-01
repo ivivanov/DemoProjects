@@ -21,8 +21,8 @@ namespace PlayingWithTasks
             //new TwoThreadsSameData().Start();
             //new ForeGRAndBGR().Start();
             //new Deadlock().Start();
-            new TestMutex().Start();
-            Console.WriteLine("end");
+            //new MutexDemo().Start();
+            new SemaphoreDemo().Start();
         }
     }
 }
