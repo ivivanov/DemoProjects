@@ -46,6 +46,7 @@
     <Compile Include="ForeGRAndBGR.cs" />
     <Compile Include="MutexDemo.cs" />
     <Compile Include="SemaphoreDemo.cs" />
+    <Compile Include="SignalingEventWaitHandles.cs" />
     <Compile Include="TwoThreadsSameData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

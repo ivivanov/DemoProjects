@@ -9,9 +9,6 @@ namespace PlayingWithTasks
 {
     class Program
     {
-        private static object locker1 = new object();
-        private static object locker2 = new object();
-
         static void Main(string[] args)
         {
             //TaskDelay.Start();
@@ -22,7 +19,8 @@ namespace PlayingWithTasks
             //new ForeGRAndBGR().Start();
             //new Deadlock().Start();
             //new MutexDemo().Start();
-            new SemaphoreDemo().Start();
+            //new SemaphoreDemo().Start();
+            new SignalingEventWaitHandles().Start();
         }
     }
 }
