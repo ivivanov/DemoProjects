@@ -12,7 +12,7 @@ namespace PlayingWithTasks
         static void Main(string[] args)
         {
             //TaskDelay.Start();
-            //new TimerAndTasks().Start();
+            new TimerAndTasks().Start();
             //new Threads().Start();
             //new ThreadsConcurency().Start();
             //new TwoThreadsSameData().Start();
@@ -20,7 +20,10 @@ namespace PlayingWithTasks
             //new Deadlock().Start();
             //new MutexDemo().Start();
             //new SemaphoreDemo().Start();
-            new SignalingEventWaitHandles().Start();
+            //new SignalingEventWaitHandles().Start();
+            //new GateStyleStartThreads().Start();
+            //new DeadlockDemoTwo().Start();
+            //new PlayingWithBackgroundWorker().Start();
         }
     }
 }

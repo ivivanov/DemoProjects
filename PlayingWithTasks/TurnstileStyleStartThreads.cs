@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PlayingWithTasks
 {
-    public class SignalingEventWaitHandles
+    public class TurnstileStyleStartThreads
     {
-
         public void Start()
         {
             AutoResetEvent resetEvent = new AutoResetEvent(false);

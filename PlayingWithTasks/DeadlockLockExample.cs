@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlayingWithTasks
 {
-    public class Deadlock
+    public class DeadlockLockExample
     {
         private readonly object locker1 = new object();
         private readonly object locker2 = new object();

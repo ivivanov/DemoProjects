@@ -42,16 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Deadlock.cs" />
+    <Compile Include="DeadlockLockExample.cs" />
+    <Compile Include="DeadlockSynchronizationAttrExample.cs" />
     <Compile Include="ForeGRAndBGR.cs" />
     <Compile Include="MutexDemo.cs" />
+    <Compile Include="PlayingWithBackgroundWorker.cs" />
     <Compile Include="SemaphoreDemo.cs" />
-    <Compile Include="SignalingEventWaitHandles.cs" />
+    <Compile Include="TurnstileStyleStartThreads.cs" />
+    <Compile Include="GateStyleStartThreads.cs" />
     <Compile Include="TwoThreadsSameData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskDelay.cs" />
-    <Compile Include="Threads.cs" />
     <Compile Include="ThreadsConcurency.cs" />
     <Compile Include="TimerAndTasks.cs" />
   </ItemGroup>
