@@ -15,7 +15,7 @@ namespace PlayingWithTasks
             ServiceB b = new ServiceB();
             ServiceC c = new ServiceC();
             int maxTime = 3000;
-            
+
             var timerA = new Timer(maxTime - a.ResponseTime);
             timerA.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs e) =>
             {
@@ -73,11 +73,6 @@ namespace PlayingWithTasks
         //    timer.Elapsed += Timer_Elapsed;
         //    timer.SynchronizingObject
         //}
-
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         class ServiceA
         {

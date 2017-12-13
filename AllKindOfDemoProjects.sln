@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatetimeExperiments", "Date
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapReduceFilterInCS", "MapReduceFilterInCS\MapReduceFilterInCS.csproj", "{CD88C282-9501-4789-8FE9-87781A556AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ES6", "ES6\ES6.csproj", "{69A3FA53-BAA3-4DBA-BD52-E9A4D2388AA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ES6", "ES6\ES6.csproj", "{69A3FA53-BAA3-4DBA-BD52-E9A4D2388AA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsocketsPlayground", "WebsocketsPlayground\WebsocketsPlayground.csproj", "{D302FAA4-E95B-451B-AD99-930A0841454F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{69A3FA53-BAA3-4DBA-BD52-E9A4D2388AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69A3FA53-BAA3-4DBA-BD52-E9A4D2388AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A3FA53-BAA3-4DBA-BD52-E9A4D2388AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D302FAA4-E95B-451B-AD99-930A0841454F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D302FAA4-E95B-451B-AD99-930A0841454F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D302FAA4-E95B-451B-AD99-930A0841454F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D302FAA4-E95B-451B-AD99-930A0841454F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

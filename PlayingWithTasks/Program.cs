@@ -12,7 +12,7 @@ namespace PlayingWithTasks
         static void Main(string[] args)
         {
             //TaskDelay.Start();
-            new TimerAndTasks().Start();
+            //new TimerAndTasks().Start();
             //new Threads().Start();
             //new ThreadsConcurency().Start();
             //new TwoThreadsSameData().Start();
@@ -24,6 +24,7 @@ namespace PlayingWithTasks
             //new GateStyleStartThreads().Start();
             //new DeadlockDemoTwo().Start();
             //new PlayingWithBackgroundWorker().Start();
+            new InfiniteThreadWithEventHandler().Start();
         }
     }
 }

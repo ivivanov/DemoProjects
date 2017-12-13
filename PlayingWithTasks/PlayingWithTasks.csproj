@@ -45,6 +45,7 @@
     <Compile Include="DeadlockLockExample.cs" />
     <Compile Include="DeadlockSynchronizationAttrExample.cs" />
     <Compile Include="ForeGRAndBGR.cs" />
+    <Compile Include="InfiniteThreadWithEventHandler.cs" />
     <Compile Include="MutexDemo.cs" />
     <Compile Include="PlayingWithBackgroundWorker.cs" />
     <Compile Include="SemaphoreDemo.cs" />
