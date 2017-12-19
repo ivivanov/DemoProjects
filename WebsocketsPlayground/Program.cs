@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
-using WampSharp.V2;
-using WampSharp.V2.Client;
-using WampSharp.V2.Realm;
+using WebSocketSharp;
 
 namespace WebsocketsPlayground
 {
@@ -12,54 +9,17 @@ namespace WebsocketsPlayground
 
         static void Main(string[] args)
         {
-            EventWaitHandle resetEvent = new EventWaitHandle(false, EventResetMode.AutoReset);
-            var socketConnection = new TestWampSharp();
-
-            socketConnection.StartClient();
-            new Thread((x) =>
+            using (var ws = new WebSocket("wss://api.bitfinex.com/ws/2"))
             {
-                while (true)
-                {
-                    resetEvent.WaitOne();
-                    Console.WriteLine("loop");
-                }
-            }).Start(socketConnection);
+                ws.OnMessage += (sender, e) =>
+                    Console.WriteLine(e.Data);
 
-            while (true)
-            {
-                Thread.Sleep(300);
-                resetEvent.Set();
+                ws.Connect();
+                ws.IsAlive
+                ws.Send("{'event':'subscribe','channel':'ticker','symbol':'BTCUSD'}");
+                Task.Delay(1000).Wait();
+                Console.ReadKey(true);
             }
-        }
-    }
-
-    public class TestWampSharp : IDisposable
-    {
-        private string location = "wss://api.poloniex.com";
-        IWampChannel channel;
-        IDisposable subscription;
-
-        public void Dispose()
-        {
-            channel.Close();
-            subscription.Dispose();
-        }
-
-        public void StartClient()
-        {
-            DefaultWampChannelFactory factory = new DefaultWampChannelFactory();
-            channel = factory.CreateJsonChannel(location, "realm1");
-            channel.Open();
-            IWampRealmProxy realmProxy = channel.RealmProxy;
-
-            subscription =
-                realmProxy.Services
-                .GetSubject("ticker")
-                .Subscribe(x =>
-                {
-                    Console.WriteLine("Got Event: " + x);
-                });
-
         }
     }
 }
