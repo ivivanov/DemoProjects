@@ -13,6 +13,11 @@ namespace SafeExecuteFuncAsParam
             //string arrayString = "[29,[15852,43.64443855,15854,41.38360298,-630.712288,-0.0383,15853,3192.79867954,16602,15323]]";
             string arrayString = "[15,'hb']";
 
+            if (true)
+            {
+
+            }
+
             if (arrayString.StartsWith("[") && arrayString.EndsWith("]"))
             {
                 int commaIndex = arrayString.IndexOf(',');

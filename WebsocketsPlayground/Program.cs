@@ -15,7 +15,6 @@ namespace WebsocketsPlayground
                     Console.WriteLine(e.Data);
 
                 ws.Connect();
-                ws.IsAlive
                 ws.Send("{'event':'subscribe','channel':'ticker','symbol':'BTCUSD'}");
                 Task.Delay(1000).Wait();
                 Console.ReadKey(true);

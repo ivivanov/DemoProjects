@@ -24,9 +24,11 @@ namespace PlayingWithTasks
             //new GateStyleStartThreads().Start();
             //new DeadlockDemoTwo().Start();
             //new PlayingWithBackgroundWorker().Start();
-            var numsReceiver = new InfiniteThreadWithEventHandler();
-            numsReceiver.Start();
-            new NumbersProcessor(numsReceiver);
+            //var numsReceiver = new InfiniteThreadWithEventHandler();
+            //numsReceiver.Start();
+            //new NumbersProcessor(numsReceiver);
+
+            new TimerSimulateLoop().Start();
         }
     }
 }
